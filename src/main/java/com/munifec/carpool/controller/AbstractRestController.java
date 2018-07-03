@@ -1,17 +1,17 @@
 package com.munifec.carpool.controller;
 
-import java.util.Date;
+import java.util.HashMap;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 
-import com.munifec.carpool.model.ErrorDetails;
+import com.munifec.carpool.constants.MessageConstants;
+import com.munifec.carpool.response.CarpoolResponse;
 import com.munifec.carpool.service.CounterService;
 
 public class AbstractRestController{
@@ -21,25 +21,23 @@ public class AbstractRestController{
 	
 	@ExceptionHandler(NoSuchElementException.class)
 	@ResponseBody
-	@ResponseStatus(value = HttpStatus.NO_CONTENT)
-	public ResponseEntity<ErrorDetails> handleException(NoSuchElementException ex, WebRequest request){
-		ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(),request.getDescription(false), HttpStatus.NO_CONTENT.toString());
-		return new ResponseEntity<>(errorDetails, HttpStatus.NO_CONTENT);
+	@ResponseStatus(value = HttpStatus.NOT_FOUND)
+	public CarpoolResponse handleException(NoSuchElementException ex, WebRequest request){
+		return new CarpoolResponse(0, MessageConstants.MSG_FAILURE_GET, new HashMap<String,Object>(), new HashMap<String,Object>());
 	}
 	
 	@ExceptionHandler(IllegalArgumentException.class)
 	@ResponseBody
-	public ResponseEntity<ErrorDetails> handleException(IllegalArgumentException ex, WebRequest request){
-		ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(),request.getDescription(false), HttpStatus.NOT_FOUND.toString());
-		return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+	public CarpoolResponse handleException(IllegalArgumentException ex, WebRequest request){
+		return new CarpoolResponse(0, MessageConstants.MSG_FAILURE_GET, new HashMap<String,Object>(), new HashMap<String,Object>());
 	}
 	
 	@ExceptionHandler(Exception.class)
 	@ResponseBody
 	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-	public final ResponseEntity<ErrorDetails> handleAllExceptions(Exception ex, WebRequest request) {
-	  ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(),request.getDescription(false),HttpStatus.INTERNAL_SERVER_ERROR.toString());
-	  return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
+	public final CarpoolResponse handleAllExceptions(Exception ex, WebRequest request) {		
+		return new CarpoolResponse(0, ex.getMessage(), new HashMap<String,Object>(), new HashMap<String,Object>());
 	}
 	
 	protected String getUserNameForLoggedInUser(){

@@ -3,6 +3,7 @@ package com.munifec.carpool.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.munifec.carpool.model.UserPreference;
@@ -19,7 +20,7 @@ public class UserPreferenceServiceImpl implements UserPreferenceService {
 	}
 
 	@Override
-	public UserPreference createUserPref(UserPreference userPreferences) {
+	public UserPreference saveUserPref(UserPreference userPreferences) {
 		return userPreferenceRepository.save(userPreferences);
 	}
 
@@ -40,8 +41,14 @@ public class UserPreferenceServiceImpl implements UserPreferenceService {
 	}
 
 	@Override
-	public List<UserPreference> getAllUserPref() {
-		return (List<UserPreference>) userPreferenceRepository.findAll();
+	public List<UserPreference> getAllUserPref(Pageable pageable) {
+		return userPreferenceRepository.findAll(pageable);
+	}
+
+	@Override
+	public List<UserPreference> getUserPreferences(long userId) {
+		return userPreferenceRepository.findByUserId(userId);
+
 	}
 
 }

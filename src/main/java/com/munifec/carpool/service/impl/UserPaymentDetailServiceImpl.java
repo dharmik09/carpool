@@ -3,6 +3,7 @@ package com.munifec.carpool.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.munifec.carpool.model.UserPaymentDetail;
@@ -26,8 +27,8 @@ public class UserPaymentDetailServiceImpl implements UserPaymentDeatilService {
 	}
 
 	@Override
-	public List<UserPaymentDetail> getPaymentLists() {
-		return (List<UserPaymentDetail>) userPaymentDeatilRepository.findAll();
+	public List<UserPaymentDetail> getPaymentLists(Pageable pageable) {
+		return  userPaymentDeatilRepository.findAll(pageable);
 	}
 
 	@Override

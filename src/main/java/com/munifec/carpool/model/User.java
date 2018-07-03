@@ -23,7 +23,14 @@ public class User {
 	private Long roleId;
 	private String mobile;
 	private String otp;
+	private String userImage;
 	private Date otpCreationTime;
+	public String getUserImage() {
+		return userImage;
+	}
+	public void setUserImage(String userImage) {
+		this.userImage = userImage;
+	}
 	private String createdBy;
 	private Date createdTime;
 	private String modifiedBy;

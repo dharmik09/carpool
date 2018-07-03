@@ -1,25 +1,24 @@
 package com.munifec.carpool.controller;
 
-import java.util.List;
-
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.munifec.carpool.response.CarpoolResponse;
 
 public interface BasicAppController<E> {
-	@GetMapping("/list") //GET
-	public List<E> list();
+	 
+	public CarpoolResponse list(Pageable pageable);
 	
-	@PostMapping("/insert") //POST
-	public E insert(E model);
+	 
+	public CarpoolResponse insert(E model,MultipartFile file);
 	
-	@PostMapping("/update") //POST
-	public E update(E model);
+	 
+	public CarpoolResponse update(E model);
 
-	@DeleteMapping("/delete/{id}")  //DELETE
-	public boolean delete(@PathVariable("id") long id);
+	//@DeleteMapping("/delete/{id}")  //DELETE
+	public CarpoolResponse delete(@PathVariable("id") long id);
 	
-	@GetMapping("/view/{id}") //GET
-	public E view(@PathVariable("id") long id);
+	//@GetMapping("/view/{id}") //GET
+	public CarpoolResponse view(@PathVariable("id") long id);
 }

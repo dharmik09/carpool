@@ -2,12 +2,14 @@ package com.munifec.carpool.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+
 import com.munifec.carpool.model.UserPreference;
 
 
 public interface UserPreferenceService {
 	
-	public UserPreference createUserPref(UserPreference userPreferences);
+	public UserPreference saveUserPref(UserPreference userPreferences);
 	
 	public UserPreference getPref(long id);
 	
@@ -15,6 +17,8 @@ public interface UserPreferenceService {
 	
 	public void deleteUserPref(long id);
 	
-	public List<UserPreference> getAllUserPref();
+	public List<UserPreference> getAllUserPref(Pageable pageable);
+	
+	public List<UserPreference> getUserPreferences(long id);
 	
 }

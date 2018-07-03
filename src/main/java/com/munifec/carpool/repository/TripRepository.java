@@ -6,12 +6,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.munifec.carpool.model.User;
+import com.munifec.carpool.model.Trip;
 
 @Repository
-public interface UserRepository extends CrudRepository<User, Long> {
-	 	
-	public List<User> findAll(Pageable pageable);
+public interface TripRepository extends CrudRepository<Trip, Long>{
+	public List<Trip> findAll(Pageable pageable);
 	
-	//public Page<User> getPage(CassandraPageRequest pageRequest);
+	public List<Trip> findAll();
 }

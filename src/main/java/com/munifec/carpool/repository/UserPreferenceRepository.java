@@ -3,6 +3,7 @@ package com.munifec.carpool.repository;
 import java.util.List;
 
 import org.springframework.data.cassandra.repository.AllowFiltering;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,4 +13,6 @@ import com.munifec.carpool.model.UserPreference;
 public interface UserPreferenceRepository extends CrudRepository<UserPreference, Long>{
 	@AllowFiltering
 	public List<UserPreference> findByUserId(long userId);
+	
+	public List<UserPreference> findAll(Pageable pageable);
 }

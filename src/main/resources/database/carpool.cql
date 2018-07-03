@@ -22,6 +22,7 @@ CREATE TABLE carpool.users (
 	mobile text,
 	otp text,
 	otpCreationTime timestamp,
+	userImage text,
 	createdBy text,
 	createdTime timestamp,
 	modifiedBy text,
@@ -45,7 +46,7 @@ CREATE TABLE carpool.userRole
 );
 CREATE TABLE carpool.userPaymentDetails
  (
-	userPaymentDetailId bigint,
+	userPamentDetailId bigint,
 	userId bigint,
 	paymentClientType text,
 	cardLast4Digits text,
@@ -55,16 +56,17 @@ CREATE TABLE carpool.userPaymentDetails
 	createdTime timestamp,
 	updatedBy text,
 	modifiedTime timestamp,
-	PRIMARY KEY (userPaymentDetailId)
+	PRIMARY KEY (userPamentDetailId)
 );
 
 create table carpool.userCars(
-	userCardId bigint PRIMARY KEY,
+	userCarId bigint PRIMARY KEY,
 	carMakerId bigint,
 	carModelId bigint,
 	colour text,
 	country text,
 	numberPlate text,
+	userCarImage text,
 	imageId bigint,
 	createdBy text,
 	createdTime timestamp,
@@ -93,6 +95,7 @@ create table carpool.userCars(
 	createdTime timestamp,
 	modifiedBy text,
 	modifiedTime timestamp
+	 
 );
 
 create table carpool.userPreferencesMaster(
@@ -114,7 +117,7 @@ create table carpool.userPreferencesMasterValues(
 create table carpool.images(
 	imageId bigint PRIMARY KEY,
 	imageType bigint,
-	imagePath int,
+	imagePath text,
 	createdBy text,
 	createdTime timestamp,
 	modifiedBy text,
@@ -199,9 +202,9 @@ create table carpool.tripRequest(
 	tripId bigint,
 	userId bigint,
 	estimatedTripDistance bigint,
-	estimatedTripTime time,
+	estimatedTripTime time,   
 	actualTripDistance bigint,
-	actualTripEndTime time,
+	actualTripEndTime time,  
 	tripRequestStatus int,
 	startLocationText text,
 	endLocationText text,
@@ -210,7 +213,7 @@ create table carpool.tripRequest(
 	endLocationLatitite bigint,
 	endLocationLongitute bigint,
 	seats int,
-	estimatedTripCost int ,
+	estimatedTripCost int,
 	actualTripCost int,
 	createdBy text,
 	createdTime timestamp,
@@ -230,12 +233,12 @@ create table carpool.trip(
 	endLocationLongitute bigint,
 	instantly text,
 	tripStartTime timestamp,
-	parentTripId bigint,
+	parentTripId bigint, 
 	tripStatus int,
 	estimatedTripDistance bigint,
-	estimatedTripTime time,
+	estimatedTripTime timestamp,  // change Date To Long
 	actualTripDistance bigint,
-	actualTripEndTime timestamp,
+	actualTripEndTime timestamp, // change Date To Long
 	tripEarning double,
 	createdBy text,
 	createdTime timestamp,
@@ -249,3 +252,9 @@ CREATE TABLE carpool.ids (
   PRIMARY KEY (idname)
 );
 
+CREATE TABLE carpool.fileuploding(
+	 
+	filesize bigint PRIMARY KEY,
+	filename text
+	
+);
