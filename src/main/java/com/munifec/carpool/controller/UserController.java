@@ -28,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.munifec.carpool.constants.CommonConstants;
 import com.munifec.carpool.constants.CounterConstants;
 import com.munifec.carpool.constants.MessageConstants;
+import com.munifec.carpool.exception.NoDataFoundException;
 import com.munifec.carpool.model.DashBoard;
 import com.munifec.carpool.model.Trip;
 import com.munifec.carpool.model.TripRequest;
@@ -93,6 +94,9 @@ public class UserController extends AbstractRestController implements BasicAppCo
 	@PostMapping("/user") // for insert
 	public CarpoolResponse insert(User user, MultipartFile file) {
 		log.info("user to registered : " + user);
+		if (user == null) {
+			throw new NoDataFoundException(MessageConstants.MSG_FAILURE_INSERT);
+		}
 		// Get counter value from db for key column for Insert
 		long userId = getIdForNewObject(CounterConstants.USER_COUNTER);
 		user.setId(userId);
@@ -100,10 +104,15 @@ public class UserController extends AbstractRestController implements BasicAppCo
 		Timestamp time = new Timestamp(System.currentTimeMillis());
 		user.setCreatedTime(time);
 		user.setCreatedBy(getUserNameForLoggedInUser());
-		User saveUser = userService.saveUserWithImage(user, file);
+		User saveUser = null;
+		if(file !=null) {
+			saveUser = userService.saveUserWithImage(user, file);
+		}else {
+			saveUser = userService.saveUser(user);
+		}
 
 		Map<String, Object> dataMap = new HashMap<String, Object>();
-		dataMap.put("saveUser", saveUser);
+		dataMap.put("user", saveUser);
 		Map<String, Object> metaDataMap = new HashMap<String, Object>();
 		metaDataMap.put("page", 1);
 		metaDataMap.put("size", 10);
